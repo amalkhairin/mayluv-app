@@ -20,7 +20,8 @@ class GuideApp {
           actions: [
             FlatButton(
               child: Text("Skip"),
-              onPressed: (){
+              onPressed: () async {
+                await Session.addBool(key: "hasDoneGuide", value: true);
                 Navigator.of(context).pop();
               },
             ),

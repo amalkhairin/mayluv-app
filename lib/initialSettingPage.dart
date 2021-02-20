@@ -29,11 +29,19 @@ class _InitialSettingPageState extends State<InitialSettingPage> {
     });
   }
 
+  removePreferenceData(String key) async {
+    bool isKeyAvailable = await Session.containsKey(key: key);
+    if (isKeyAvailable) {
+      await Session.delete(key: key);
+    }
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    Session.clear();
+    // Session.clear();
+    removePreferenceData('state');
   }
 
   @override
@@ -133,7 +141,7 @@ class _InitialSettingPageState extends State<InitialSettingPage> {
                     path = image.path;
                   }
                   Hive.box("ProfileData").put("data", ProfileData(name: _controller.text, imagePath: path));
-                  Navigator.of(context).push(
+                  Navigator.of(context).pushReplacement(
                     MaterialPageRoute(builder: (context)=> MainPage())
                   );
                 }

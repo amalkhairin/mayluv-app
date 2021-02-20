@@ -342,7 +342,12 @@ class _MainPageState extends State<MainPage> {
                                   children: [
                                     Icon(Icons.attach_file),
                                     SizedBox(width: 12,),
-                                    Icon(Icons.camera_alt),
+                                    InkWell(
+                                      child: Icon(Icons.camera_alt),
+                                      onTap: (){
+                                        print('camera');
+                                      },
+                                    )
                                   ],
                                 ),
                               ),

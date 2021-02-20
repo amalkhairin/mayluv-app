@@ -35,6 +35,7 @@ dependencies:
   image_picker: ^0.6.7+4
   toast: ^0.1.5
   provider:
+  introduction_screen: ^1.0.9
 
 dev_dependencies:
   flutter_test:
@@ -64,6 +65,10 @@ flutter:
   assets:
     - assets/img/profil_pict_default_1x.png
     - assets/img/profil_pict_default_1x.png
+    - assets/img/call_img.png
+    - assets/img/chat_img.png
+    - assets/img/screenshot_img.png
+    - assets/img/vidcall_img.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

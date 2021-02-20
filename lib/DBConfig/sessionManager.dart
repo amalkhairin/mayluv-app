@@ -25,4 +25,9 @@ class Session {
     SharedPreferences pref = await SharedPreferences.getInstance();
     pref.clear();
   }
+
+  static containsKey({String key}) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    return pref.containsKey(key);
+  }
 }

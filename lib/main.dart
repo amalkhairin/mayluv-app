@@ -5,6 +5,7 @@ import 'package:mailuv/DBConfig/profileData.dart';
 import 'package:mailuv/DBConfig/sessionManager.dart';
 import 'package:mailuv/initialSettingPage.dart';
 import 'package:mailuv/mainPage.dart';
+import 'package:mailuv/onboardingPage.dart';
 import 'package:path_provider/path_provider.dart' as pathProvider;
 
 void main() async {
@@ -13,20 +14,26 @@ void main() async {
   Hive.init(appDir.path);
   Hive.registerAdapter(MessageAdapter());
   Hive.registerAdapter(ProfileDataAdapter());
-  var prevData = await Session.getData(key: "state");
-  runApp(MyApp(prevData));
+  var loginData = await Session.getData(key: "state");
+  var hasCompleteOnBoard = await Session.getData(key: 'hasCompleteOnBoard');
+  if(hasCompleteOnBoard == null){
+    await Session.addBool(key: 'hasCompleteOnBoard', value: false);
+    hasCompleteOnBoard = await Session.getData(key: 'hasCompleteOnBoard');
+  }
+  runApp(MyApp(loginData, hasCompleteOnBoard));
 }
 
 class MyApp extends StatelessWidget {
-  final dataName;
-  MyApp(this.dataName);
+  final loginData;
+  final hasCompleteOnBoard;
+  MyApp(this.loginData, this.hasCompleteOnBoard);
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      home: dataName == null? InitialSettingPage() : MainPage(),
+      title: 'MaiLuv',
+      home: loginData == null? hasCompleteOnBoard? InitialSettingPage() : OnBoardingPage() : MainPage(),
     );
   }
 }
