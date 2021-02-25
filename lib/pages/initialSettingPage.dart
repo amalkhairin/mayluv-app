@@ -2,20 +2,19 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mailuv/DBConfig/message.dart';
 import 'package:mailuv/DBConfig/profileData.dart';
 import 'package:mailuv/DBConfig/sessionManager.dart';
+import 'package:mailuv/constant/colorBase.dart';
+import 'package:mailuv/pages/chatPage.dart';
 
-import 'colorBase.dart';
-
-class SettingPage extends StatefulWidget {
+class InitialSettingPage extends StatefulWidget {
   @override
-  _SettingPageState createState() => _SettingPageState();
+  _InitialSettingPageState createState() => _InitialSettingPageState();
 }
 
-class _SettingPageState extends State<SettingPage> {
+class _InitialSettingPageState extends State<InitialSettingPage> {
+
   TextEditingController _controller = TextEditingController();
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
   File image;
@@ -23,30 +22,17 @@ class _SettingPageState extends State<SettingPage> {
 
   pickImageFromGallery() async{
     final pickedImage = await picker.getImage(source: ImageSource.gallery);
+    await Session.addString(key: "imagePath", value: pickedImage.path);
     setState(() {
       image = File(pickedImage.path);
+      
     });
   }
 
-  getImage() async {
-    var data = await Hive.openBox("ProfileData");
-    ProfileData profileData = data.get("data");
-    var _path = profileData.imagePath;
-    if(_path != ""){
-      setState(() {
-        image = File(_path);
-      });
-    }
-  }
-
-  getName() async {
-    var data = await Hive.openBox("ProfileData");
-    ProfileData profileData = data.get("data");
-    var _name = profileData.name;
-    if(_name != null){
-      setState(() {
-        _controller = TextEditingController(text: _name);
-      });
+  removePreferenceData(String key) async {
+    bool isKeyAvailable = await Session.containsKey(key: key);
+    if (isKeyAvailable) {
+      await Session.delete(key: key);
     }
   }
 
@@ -54,25 +40,22 @@ class _SettingPageState extends State<SettingPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getImage();
-    getName();
+    // Session.clear();
+    removePreferenceData('state');
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: ColorBase.primary,
-        title: Text("Setelan"),
-      ),
       backgroundColor: Colors.white,
+      resizeToAvoidBottomPadding: false,
       body: SafeArea(
-        child: _settingPageBuild(context:context),
+        child: _initialSettingPageBuild(context:context),
       ),
     );
   }
 
-  _settingPageBuild({context}) {
+  _initialSettingPageBuild({BuildContext context}) {
     return Container(
       child: Stack(
         children: [
@@ -92,7 +75,7 @@ class _SettingPageState extends State<SettingPage> {
                             shape: BoxShape.circle,
                             image: DecorationImage(
                               fit: BoxFit.cover,
-                              image: image == null
+                              image: image == null 
                                 ? AssetImage("assets/img/profil_pict_default_1x.png")
                                 : FileImage(image),
                             )
@@ -119,6 +102,7 @@ class _SettingPageState extends State<SettingPage> {
                   ),
                 ),
                 SizedBox(height: 40,),
+                Text("Beri nama pasangan chat anda"),
                 Padding(
                   padding: EdgeInsets.only(left: 24, right: 24),
                   child: Form(
@@ -128,7 +112,6 @@ class _SettingPageState extends State<SettingPage> {
                       controller: _controller,
                       validator: (value) => value.isEmpty? "Nama tidak boleh kosong":null,
                       decoration: InputDecoration(
-                        icon: Icon(Icons.person),
                         focusColor: ColorBase.primary,
                         fillColor: ColorBase.primary,
                         hoverColor: ColorBase.primary,
@@ -151,14 +134,16 @@ class _SettingPageState extends State<SettingPage> {
               onPressed: () async {
                 final FormState form = _key.currentState;
                 if(form.validate()){
-                  // await Session.addString(key: "name", value: _controller.text);
-                  var profileBox = await Hive.openBox("ProfileData");
+                  await Session.addString(key: "state", value: "login");
+                  await Hive.openBox("ProfileData");
                   String path = "";
                   if(image != null){
                     path = image.path;
                   }
-                  profileBox.put("data", ProfileData(name: _controller.text, imagePath: path));
-                  Navigator.of(context).pop();
+                  Hive.box("ProfileData").put("data", ProfileData(name: _controller.text, imagePath: path));
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context)=> ChatPage())
+                  );
                 }
               },
               child: Padding(

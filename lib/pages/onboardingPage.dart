@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:mailuv/DBConfig/sessionManager.dart';
-import 'package:mailuv/colorBase.dart';
-import 'package:mailuv/initialSettingPage.dart';
+import 'package:mailuv/constant/colorBase.dart';
+import 'package:mailuv/pages/initialSettingPage.dart';
 
 class OnBoardingPage extends StatefulWidget {
   @override

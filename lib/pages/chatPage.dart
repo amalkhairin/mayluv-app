@@ -7,20 +7,22 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:mailuv/DBConfig/message.dart';
 import 'package:mailuv/DBConfig/profileData.dart';
+import 'package:mailuv/DBConfig/recivedMessage.dart';
+import 'package:mailuv/DBConfig/sendedMessage.dart';
 import 'package:mailuv/DBConfig/sessionManager.dart';
-import 'package:mailuv/callPage.dart';
-import 'package:mailuv/colorBase.dart';
-import 'package:mailuv/guideApp.dart';
-import 'package:mailuv/initialSettingPage.dart';
-import 'package:mailuv/settingPage.dart';
+import 'package:mailuv/pages/callPage.dart';
+import 'package:mailuv/constant/colorBase.dart';
+import 'package:mailuv/pages/guideApp.dart';
+import 'package:mailuv/pages/initialSettingPage.dart';
+import 'package:mailuv/pages/settingPage.dart';
 import 'package:toast/toast.dart';
 
-class MainPage extends StatefulWidget {
+class ChatPage extends StatefulWidget {
   @override
-  _MainPageState createState() => _MainPageState();
+  _ChatPageState createState() => _ChatPageState();
 }
 
-class _MainPageState extends State<MainPage> {
+class _ChatPageState extends State<ChatPage> {
   
   ScrollController _scrollController = ScrollController(keepScrollOffset: true, initialScrollOffset: 0.0);
   TextEditingController _typeController = TextEditingController();
@@ -57,12 +59,12 @@ class _MainPageState extends State<MainPage> {
     return Scaffold(
       backgroundColor: ColorBase.primary,
       body: SafeArea(
-        child: _mainPageBuild(context:context),
+        child: _ChatPageBuild(context:context),
       ),
     );
   }
 
-  _mainPageBuild({BuildContext context}) {
+  _ChatPageBuild({BuildContext context}) {
     return GestureDetector(
       onTap: () {
         if(node.hasFocus){
@@ -409,80 +411,4 @@ class _MainPageState extends State<MainPage> {
     "Reset Pesan",
   ];
 
-}
-
-class RecivedMessage extends StatelessWidget {
-  final String message;
-  final String time;
-  RecivedMessage({this.message,this.time});
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(left: 14, right: 50),
-      child: Card(
-        color: Colors.white,
-        child: Container(
-          child: Stack(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: 8, top: 8, right: 30,bottom: 14),
-                child: Text(message + "     ",textWidthBasis: TextWidthBasis.longestLine, style: TextStyle(fontSize: 16)),
-              ),
-              Positioned(
-                bottom: 0,
-                right: 0,
-                child: Padding(
-                  padding: EdgeInsets.only(right: 4, bottom: 4),
-                  child: Row(
-                    children: [
-                      Text(time, style: TextStyle(fontSize: 12, color: Colors.grey),),
-                    ],
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class SendedMessage extends StatelessWidget {
-  final String message;
-  final String time;
-  SendedMessage({this.message,this.time});
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(left: 50, right: 14),
-      child: Card(
-        color: ColorBase.sendedColor,
-        child: Container(
-          child: Stack(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: 8, top: 8, right: 30,bottom: 14),
-                child: Text(message + "       ",textWidthBasis: TextWidthBasis.longestLine, style: TextStyle(fontSize: 16)),
-              ),
-              Positioned(
-                bottom: 0,
-                right: 0,
-                child: Padding(
-                  padding: EdgeInsets.only(right: 4, bottom: 4),
-                  child: Row(
-                    children: [
-                      Text(time, style: TextStyle(fontSize: 12, color: Colors.grey),),
-                      SizedBox(width:2,),
-                      Icon(Icons.done_all, size: 16, color: Colors.blue),
-                    ],
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
 }

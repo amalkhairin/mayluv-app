@@ -3,9 +3,9 @@ import 'package:hive/hive.dart';
 import 'package:mailuv/DBConfig/message.dart';
 import 'package:mailuv/DBConfig/profileData.dart';
 import 'package:mailuv/DBConfig/sessionManager.dart';
-import 'package:mailuv/initialSettingPage.dart';
-import 'package:mailuv/mainPage.dart';
-import 'package:mailuv/onboardingPage.dart';
+import 'package:mailuv/pages/initialSettingPage.dart';
+import 'package:mailuv/pages/chatPage.dart';
+import 'package:mailuv/pages/onboardingPage.dart';
 import 'package:path_provider/path_provider.dart' as pathProvider;
 
 void main() async {
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'MaiLuv',
-      home: loginData == null? hasCompleteOnBoard? InitialSettingPage() : OnBoardingPage() : MainPage(),
+      home: loginData == null? hasCompleteOnBoard? InitialSettingPage() : OnBoardingPage() : ChatPage(),
     );
   }
 }
