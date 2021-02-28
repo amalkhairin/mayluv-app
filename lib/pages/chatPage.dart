@@ -31,6 +31,7 @@ class _ChatPageState extends State<ChatPage> {
   String name = "";
   File _image;
   bool isYou = true;
+  List<bool> _isSelectedToggleSwitcher = [false, true];
 
   @override
   void initState() {
@@ -299,100 +300,143 @@ class _ChatPageState extends State<ChatPage> {
               alignment: FractionalOffset.bottomCenter,
               child: Padding(
                 padding: EdgeInsets.only(left: 6, right: 6, bottom: 6),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Expanded(
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                          maxHeight: 200,
+                    node.hasFocus
+                    ? Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ToggleButtons(
+                          fillColor: ColorBase.primary,
+                          selectedColor: Colors.white,
+                          textStyle: TextStyle(fontSize: 10),
+                          borderRadius: BorderRadius.circular(20),
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Left Side"),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Right Side"),
+                            ),
+                          ],
+                          onPressed: (index){
+                            setState(() {
+                              _isSelectedToggleSwitcher[index] = true;
+                              _isSelectedToggleSwitcher[_isSelectedToggleSwitcher.length-index-1] = false;
+                            });
+                            if(index == 0){
+                              String _msg = "switch side: left";
+                              Toast.show(
+                                _msg,
+                                context,
+                                duration: Toast.LENGTH_LONG,
+                                gravity: Toast.CENTER,
+                              );
+                              setState(() {
+                                isYou = false;
+                              });
+                            } else {
+                              String _msg = "switch side: right";
+                              Toast.show(
+                                _msg,
+                                context,
+                                duration: Toast.LENGTH_LONG,
+                                gravity: Toast.CENTER,
+                              );
+                              setState(() {
+                                isYou = true;
+                              });
+                            }
+                          },
+                          isSelected: _isSelectedToggleSwitcher,
                         ),
-                        // height: 50,
-                        child: Theme(
-                          data: Theme.of(context).copyWith(
-                            primaryColor: Colors.grey
-                          ),
-                          child: TextFormField(
-                            keyboardType: TextInputType.multiline,
-                            maxLines: null,
-                            focusNode: node,
-                            controller: _typeController,
-                            decoration: InputDecoration(
-                              fillColor: Colors.white,
-                              hintText: "Ketik pesan",
-                              filled: true,
-                              // enabled: false,
-                              prefixIcon: InkWell(
-                                onTap: (){
-                                  String _msg = isYou? "switch side: left":"switch side: right";
-                                  Toast.show(
-                                    _msg,
-                                    context,
-                                    duration: Toast.LENGTH_LONG,
-                                    gravity: Toast.CENTER,
-                                  );
-                                  setState(() {
-                                    isYou = !isYou;
-                                  });
-                                },
-                                child: Icon(Icons.insert_emoticon),
+                      )
+                    :Container(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Expanded(
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(
+                              maxHeight: 200,
+                            ),
+                            // height: 50,
+                            child: Theme(
+                              data: Theme.of(context).copyWith(
+                                primaryColor: Colors.grey
                               ),
-                              suffixIcon: Padding(
-                                padding: EdgeInsets.only(top: 12,right: 10, left: 42, bottom: 12),
-                                child: Wrap(
-                                  children: [
-                                    Icon(Icons.attach_file),
-                                    SizedBox(width: 12,),
-                                    InkWell(
-                                      child: Icon(Icons.camera_alt),
-                                      onTap: (){
-                                        print('camera');
-                                      },
-                                    )
-                                  ],
+                              child: TextFormField(
+                                keyboardType: TextInputType.multiline,
+                                maxLines: null,
+                                focusNode: node,
+                                controller: _typeController,
+                                decoration: InputDecoration(
+                                  fillColor: Colors.white,
+                                  hintText: "Ketik pesan",
+                                  filled: true,
+                                  // enabled: false,
+                                  prefixIcon: Icon(Icons.insert_emoticon),
+                                  suffixIcon: Padding(
+                                    padding: EdgeInsets.only(top: 12,right: 10, left: 42, bottom: 12),
+                                    child: Wrap(
+                                      children: [
+                                        Icon(Icons.attach_file),
+                                        SizedBox(width: 12,),
+                                        InkWell(
+                                          child: Icon(Icons.camera_alt),
+                                          onTap: (){
+                                            print('camera');
+                                          },
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  contentPadding: EdgeInsets.only(top: 24),
+                                  focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(32), borderSide: BorderSide(color: Colors.grey[400], style: BorderStyle.solid, width: 1)),
+                                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(32), borderSide: BorderSide(color: Colors.grey[400], style: BorderStyle.solid, width: 1))
                                 ),
                               ),
-                              contentPadding: EdgeInsets.only(top: 24),
-                              focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(32), borderSide: BorderSide(color: Colors.grey[400], style: BorderStyle.solid, width: 1)),
-                              border: OutlineInputBorder(borderRadius: BorderRadius.circular(32), borderSide: BorderSide(color: Colors.grey[400], style: BorderStyle.solid, width: 1))
                             ),
                           ),
                         ),
-                      ),
+                        SizedBox(width: 6,),
+                        !node.hasFocus
+                          ? InkWell(
+                            onTap: (){
+                              Toast.show(
+                                "Fitur ini belum tersedia",
+                                context,
+                                duration: Toast.LENGTH_LONG,
+                                gravity: Toast.BOTTOM,
+                              );
+                            },
+                            child: CircleAvatar(
+                              radius: 24,
+                              backgroundColor: ColorBase.primary,
+                              child: Icon(Icons.keyboard_voice, color: Colors.white,),
+                            ),
+                          )
+                          : InkWell(
+                            onTap: (){
+                              var _datetime = DateTime.now();
+                              String _time = "${_datetime.hour}:${_datetime.minute}";
+                              var messagesBox = Hive.box("messages");
+                              isYou
+                                ? messagesBox.add(Message(text: _typeController.text, time: _time, sender: "me"))
+                                : messagesBox.add(Message(text: _typeController.text, time: _time, sender: "he/she"));
+                              _typeController.clear();
+                            },
+                            child: CircleAvatar(
+                              radius: 24,
+                              backgroundColor: ColorBase.primary,
+                              child: Icon(Icons.send, color: Colors.white,),
+                            ),
+                          )
+                      ],
                     ),
-                    SizedBox(width: 6,),
-                    !node.hasFocus
-                      ? InkWell(
-                        onTap: (){
-                          Toast.show(
-                            "Fitur ini belum tersedia",
-                            context,
-                            duration: Toast.LENGTH_LONG,
-                            gravity: Toast.BOTTOM,
-                          );
-                        },
-                        child: CircleAvatar(
-                          radius: 24,
-                          backgroundColor: ColorBase.primary,
-                          child: Icon(Icons.keyboard_voice, color: Colors.white,),
-                        ),
-                      )
-                      : InkWell(
-                        onTap: (){
-                          var _datetime = DateTime.now();
-                          String _time = "${_datetime.hour}:${_datetime.minute}";
-                          var messagesBox = Hive.box("messages");
-                          isYou
-                            ? messagesBox.add(Message(text: _typeController.text, time: _time, sender: "me"))
-                            : messagesBox.add(Message(text: _typeController.text, time: _time, sender: "he/she"));
-                          _typeController.clear();
-                        },
-                        child: CircleAvatar(
-                          radius: 24,
-                          backgroundColor: ColorBase.primary,
-                          child: Icon(Icons.send, color: Colors.white,),
-                        ),
-                      )
                   ],
                 ),
               ),
