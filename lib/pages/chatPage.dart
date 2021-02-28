@@ -12,7 +12,8 @@ import 'package:mailuv/DBConfig/sendedMessage.dart';
 import 'package:mailuv/DBConfig/sessionManager.dart';
 import 'package:mailuv/pages/callPage.dart';
 import 'package:mailuv/constant/colorBase.dart';
-import 'package:mailuv/pages/guideApp.dart';
+import 'package:mailuv/pages/guide/guidePage.dart';
+import 'package:mailuv/pages/guide/guideManager.dart';
 import 'package:mailuv/pages/initialSettingPage.dart';
 import 'package:mailuv/pages/settingPage.dart';
 import 'package:toast/toast.dart';
@@ -53,7 +54,7 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) => GuideApp.guide(context));
+    WidgetsBinding.instance.addPostFrameCallback((_) => GuideManager.guide(context));
     WidgetsBinding.instance.addPostFrameCallback((_) => toBottom());
 
     return Scaffold(
@@ -85,8 +86,6 @@ class _ChatPageState extends State<ChatPage> {
                     return Text("load failed");
                   } else {
                     var messagesBox = Hive.box("messages");
-                    // messagesBox.clear();
-                    // messagesBox.add(Message(text: "test2", time: "10.00", sender: "me"));
                     return WatchBoxBuilder(
                       box: messagesBox,
                       builder:(context, messages) => Container(
