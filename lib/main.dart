@@ -5,7 +5,7 @@ import 'package:mailuv/DBConfig/profileData.dart';
 import 'package:mailuv/DBConfig/sessionManager.dart';
 import 'package:mailuv/pages/initialSettingPage.dart';
 import 'package:mailuv/pages/chatPage.dart';
-import 'package:mailuv/pages/onboardingPage.dart';
+import 'package:mailuv/pages/onboarding/onboardingPage.dart';
 import 'package:path_provider/path_provider.dart' as pathProvider;
 
 void main() async {

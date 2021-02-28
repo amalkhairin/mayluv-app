@@ -7,6 +7,7 @@ import 'package:mailuv/DBConfig/profileData.dart';
 import 'package:mailuv/DBConfig/sessionManager.dart';
 import 'package:mailuv/constant/colorBase.dart';
 import 'package:mailuv/pages/chatPage.dart';
+import 'package:mailuv/pages/guide/guidePage.dart';
 
 class InitialSettingPage extends StatefulWidget {
   @override
