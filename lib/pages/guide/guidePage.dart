@@ -21,6 +21,13 @@ class _GuidePageState extends State<GuidePage> {
 
   List<GlobalKey> _listKeyGuide = [
     GlobalKey(debugLabel: 'KeyGuide1'),
+    GlobalKey(debugLabel: 'KeyGuide2'),
+    GlobalKey(debugLabel: 'KeyGuide3'),
+    GlobalKey(debugLabel: 'KeyGuide4'),
+    GlobalKey(debugLabel: 'KeyGuide5'),
+    GlobalKey(debugLabel: 'KeyGuide6'),
+    GlobalKey(debugLabel: 'KeyGuide7'),
+    GlobalKey(debugLabel: 'KeyGuide8'),
   ];
 
   @override
@@ -49,6 +56,7 @@ class _GuidePageState extends State<GuidePage> {
                 child: Padding(
                   padding:EdgeInsets.only(top: 80, bottom: 64),
                   child: ListView.builder(
+                    key: _listKeyGuide[3],
                     shrinkWrap: true,
                     itemCount: 2,
                     itemBuilder: (context,index){
@@ -72,6 +80,7 @@ class _GuidePageState extends State<GuidePage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Row(
+                      key: _listKeyGuide[7],
                       children: [
                         Container(
                           height: 40,
@@ -105,11 +114,11 @@ class _GuidePageState extends State<GuidePage> {
                     ),
                     Row(
                       children: [
-                        Icon(Icons.videocam, size: 26, color: Colors.white,),
+                        Icon(Icons.videocam, key: _listKeyGuide[4],size: 26, color: Colors.white,),
                         SizedBox(width: 18,),
-                        Icon(Icons.call, size: 26, color: Colors.white,),
+                        Icon(Icons.call, key: _listKeyGuide[5], size: 26, color: Colors.white,),
                         SizedBox(width: 18,),
-                        Icon(Icons.more_vert, size: 26, color: Colors.white,),
+                        Icon(Icons.more_vert, key: _listKeyGuide[6], size: 26, color: Colors.white,),
                       ],
                     )
                   ],
@@ -119,58 +128,87 @@ class _GuidePageState extends State<GuidePage> {
                 alignment: FractionalOffset.bottomCenter,
                 child: Padding(
                   padding: EdgeInsets.only(left: 6, right: 6, bottom: 6),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Expanded(
-                        child: ConstrainedBox(
-                          constraints: BoxConstraints(
-                            maxHeight: 200,
-                          ),
-                          // height: 50,
-                          child: Theme(
-                            data: Theme.of(context).copyWith(
-                              primaryColor: Colors.grey
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ToggleButtons(
+                          key: _listKeyGuide[1],
+                          fillColor: ColorBase.primary,
+                          selectedColor: Colors.white,
+                          textStyle: TextStyle(fontSize: 10),
+                          borderRadius: BorderRadius.circular(20),
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Left Side"),
                             ),
-                            child: TextFormField(
-                              readOnly: true,
-                              keyboardType: TextInputType.multiline,
-                              maxLines: null,
-                              decoration: InputDecoration(
-                                fillColor: Colors.white,
-                                hintText: "Ketik pesan",
-                                filled: true,
-                                // enabled: false,
-                                prefixIcon: Icon(Icons.insert_emoticon),
-                                suffixIcon: Padding(
-                                  padding: EdgeInsets.only(top: 12,right: 10, left: 42, bottom: 12),
-                                  child: Wrap(
-                                    children: [
-                                      Icon(Icons.attach_file),
-                                      SizedBox(width: 12,),
-                                      Icon(Icons.camera_alt),
-                                    ],
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("Right Side"),
+                            ),
+                          ],
+                          onPressed: (index){},
+                          isSelected: [false, true],
+                        ),
+                      ),
+                      Row(
+                        key: _listKeyGuide[0],
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Expanded(
+                            child: ConstrainedBox(
+                              constraints: BoxConstraints(
+                                maxHeight: 200,
+                              ),
+                              // height: 50,
+                              child: Theme(
+                                data: Theme.of(context).copyWith(
+                                  primaryColor: Colors.grey
+                                ),
+                                child: TextFormField(
+                                  readOnly: true,
+                                  keyboardType: TextInputType.multiline,
+                                  maxLines: null,
+                                  decoration: InputDecoration(
+                                    fillColor: Colors.white,
+                                    hintText: "Ketik pesan",
+                                    filled: true,
+                                    // enabled: false,
+                                    prefixIcon: Icon(Icons.insert_emoticon),
+                                    suffixIcon: Padding(
+                                      padding: EdgeInsets.only(top: 12,right: 10, left: 42, bottom: 12),
+                                      child: Wrap(
+                                        children: [
+                                          Icon(Icons.attach_file),
+                                          SizedBox(width: 12,),
+                                          Icon(Icons.camera_alt),
+                                        ],
+                                      ),
+                                    ),
+                                    contentPadding: EdgeInsets.only(top: 24),
+                                    focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(32), borderSide: BorderSide(color: Colors.grey[400], style: BorderStyle.solid, width: 1)),
+                                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(32), borderSide: BorderSide(color: Colors.grey[400], style: BorderStyle.solid, width: 1))
                                   ),
                                 ),
-                                contentPadding: EdgeInsets.only(top: 24),
-                                focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(32), borderSide: BorderSide(color: Colors.grey[400], style: BorderStyle.solid, width: 1)),
-                                border: OutlineInputBorder(borderRadius: BorderRadius.circular(32), borderSide: BorderSide(color: Colors.grey[400], style: BorderStyle.solid, width: 1))
                               ),
                             ),
                           ),
-                        ),
+                          SizedBox(width: 6,),
+                          InkWell(
+                            onTap: (){
+                            },
+                            child: CircleAvatar(
+                              key: _listKeyGuide[2],
+                              radius: 24,
+                              backgroundColor: ColorBase.primary,
+                              child: Icon(Icons.send, color: Colors.white,),
+                            ),
+                          )
+                        ],
                       ),
-                      SizedBox(width: 6,),
-                      InkWell(
-                        onTap: (){
-                        },
-                        child: CircleAvatar(
-                          key: _listKeyGuide[0],
-                          radius: 24,
-                          backgroundColor: ColorBase.primary,
-                          child: Icon(Icons.send, color: Colors.white,),
-                        ),
-                      )
                     ],
                   ),
                 ),
@@ -196,8 +234,79 @@ class _GuidePageState extends State<GuidePage> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Lorem iipsum", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 20.0)),
-                  Text("Lorem ipsum dolor sit amet", style: TextStyle(color: Colors.white,)),
+                  Text("Tutorial 1", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 20.0)),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: Text("Ketik pesan anda disini", style: TextStyle(color: Colors.white,)),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 24),
+                    child: Text("Tap dimana saja untuk melanjutkan", style: TextStyle(color: Colors.white.withOpacity(0.6),)),
+                  )
+                ],
+              ),
+            )
+          )
+        ],
+        shape: ShapeLightFocus.RRect,
+        radius: 20,
+      ),
+    );
+
+    _target.add(
+      TargetFocus(
+        enableOverlayTab: true,
+        identify: "target 2",
+        keyTarget: _listKeyGuide[1],
+        contents: [
+          TargetContent(
+            align: ContentAlign.top,
+            child: Container(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Tutorial 2", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 20.0)),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: Text("Ganti sisi ke pengirim atau penerima (left/right)", style: TextStyle(color: Colors.white,)),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 24),
+                    child: Text("Tap dimana saja untuk melanjutkan", style: TextStyle(color: Colors.white.withOpacity(0.6),)),
+                  )
+                ],
+              ),
+            )
+          )
+        ],
+        shape: ShapeLightFocus.RRect,
+        radius: 20,
+      ),
+    );
+
+    _target.add(
+      TargetFocus(
+        enableOverlayTab: true,
+        identify: "target 3",
+        keyTarget: _listKeyGuide[2],
+        contents: [
+          TargetContent(
+            align: ContentAlign.top,
+            child: Container(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Tutorial 3", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 20.0)),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: Text("Kirim pesan dengan tap icon send", style: TextStyle(color: Colors.white,)),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 24),
+                    child: Text("Tap dimana saja untuk melanjutkan", style: TextStyle(color: Colors.white.withOpacity(0.6),)),
+                  )
                 ],
               ),
             )
@@ -205,6 +314,166 @@ class _GuidePageState extends State<GuidePage> {
         ],
         shape: ShapeLightFocus.Circle,
         radius: 10,
+      ),
+    );
+
+    _target.add(
+      TargetFocus(
+        enableOverlayTab: true,
+        identify: "target 4",
+        keyTarget: _listKeyGuide[3],
+        contents: [
+          TargetContent(
+            align: ContentAlign.bottom,
+            child: Container(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Tutorial 4", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 20.0)),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: Text("Sisi pengirim di sebelah kiri, sisi penerima di sebelah kanan", style: TextStyle(color: Colors.white,)),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 24),
+                    child: Text("Tap dimana saja untuk melanjutkan", style: TextStyle(color: Colors.white.withOpacity(0.6),)),
+                  )
+                ],
+              ),
+            )
+          )
+        ],
+        shape: ShapeLightFocus.RRect,
+        radius: 20,
+      ),
+    );
+
+    _target.add(
+      TargetFocus(
+        enableOverlayTab: true,
+        identify: "target 5",
+        keyTarget: _listKeyGuide[4],
+        contents: [
+          TargetContent(
+            align: ContentAlign.bottom,
+            child: Container(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Tutorial 5", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 20.0)),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: Text("Tap icon video untuk ke halaman video call", style: TextStyle(color: Colors.white,)),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 24),
+                    child: Text("Tap dimana saja untuk melanjutkan", style: TextStyle(color: Colors.white.withOpacity(0.6),)),
+                  )
+                ],
+              ),
+            )
+          )
+        ],
+        shape: ShapeLightFocus.Circle,
+        radius: 10,
+      ),
+    );
+
+    _target.add(
+      TargetFocus(
+        enableOverlayTab: true,
+        identify: "target 6",
+        keyTarget: _listKeyGuide[5],
+        contents: [
+          TargetContent(
+            align: ContentAlign.bottom,
+            child: Container(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Tutorial 6", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 20.0)),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: Text("Tap icon call untuk ke halaman voice call", style: TextStyle(color: Colors.white,)),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 24),
+                    child: Text("Tap dimana saja untuk melanjutkan", style: TextStyle(color: Colors.white.withOpacity(0.6),)),
+                  )
+                ],
+              ),
+            )
+          )
+        ],
+        shape: ShapeLightFocus.Circle,
+        radius: 10,
+      ),
+    );
+
+    _target.add(
+      TargetFocus(
+        enableOverlayTab: true,
+        identify: "target 7",
+        keyTarget: _listKeyGuide[6],
+        contents: [
+          TargetContent(
+            align: ContentAlign.bottom,
+            child: Container(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Tutorial 7", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 20.0)),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: Text("Tap icon more untuk melihat opsi lainnya", style: TextStyle(color: Colors.white,)),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 24),
+                    child: Text("Tap dimana saja untuk melanjutkan", style: TextStyle(color: Colors.white.withOpacity(0.6),)),
+                  )
+                ],
+              ),
+            )
+          )
+        ],
+        shape: ShapeLightFocus.Circle,
+        radius: 10,
+      ),
+    );
+
+    _target.add(
+      TargetFocus(
+        enableOverlayTab: true,
+        identify: "target 8",
+        keyTarget: _listKeyGuide[7],
+        contents: [
+          TargetContent(
+            align: ContentAlign.bottom,
+            child: Container(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text("Tutorial 8", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white, fontSize: 20.0)),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: Text("Foto, nama dan status akan muncul disini", style: TextStyle(color: Colors.white,)),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 24),
+                    child: Text("Tap dimana saja untuk mengakhiri tutorial", style: TextStyle(color: Colors.white.withOpacity(0.6),)),
+                  )
+                ],
+              ),
+            )
+          )
+        ],
+        shape: ShapeLightFocus.RRect,
+        radius: 20,
       ),
     );
   }

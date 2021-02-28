@@ -8,6 +8,7 @@ class GuideManager {
     if(hasCompleteGuide == null || hasCompleteGuide != true){
       showDialog(
         context: context,
+        barrierDismissible: false,
         builder: (context) => AlertDialog(
           content: SingleChildScrollView(
             child: ListBody(
